@@ -7,27 +7,59 @@ function getComputersCall() {
     let index = Math.floor(Math.random() * arr.length);
     return arr[index];
 }
-// Get player and computer choices
-let playersCall = getPlayersCall();
-let computersCall = getComputersCall();
 
-console.log("Player chose: " + playersCall);
-console.log("Computer chose: " + computersCall);
+function playRound(playersCall, computersCall) {
+    playersCall = playersCall.trim().toLowerCase();
+    computersCall = computersCall.trim().toLowerCase();
+    let result;
 
-// Print the result of the game
-let result;
+    if (playersCall === computersCall) {
+        result = "Match tie!";
+    }
+    else if (
+        (playersCall === "rock" && computersCall === "scissors") ||
+        (playersCall === "paper" && computersCall === "rock") ||
+        (playersCall === "scissors" && computersCall === "paper")
+    ) {
+        result = "You won!";
+    }
+    else {
+        result = "You lost!";
+    }
+    return result;
+}
+function playGame() {
+    let playerScore = 0;
+    let computerScore = 0;
+    for (let i = 0; i < 5; i++) {
+        const playersChoice = getPlayersCall();
+        const computersChoice = getComputersCall();
 
-if (playersCall === computersCall) {
-    result = "Match tie!";
+        console.log("Player chose: " + playersChoice);
+        console.log("Computer chose: " + computersChoice);
+
+        let result = playRound(playersChoice, computersChoice);
+        console.log(result);
+
+        if (result === "You won!") {
+            playerScore++;
+        } else if (result === "You lost!") {
+            computerScore++;
+        }
+    }
+
+    console.log("\nFinal scores:");
+    console.log("Player: " + playerScore);
+    console.log("Computer: " + computerScore);
+
+    if (playerScore > computerScore) {
+        console.log("Winner! You played excellent");
+    } else if (playerScore === computerScore) {
+        console.log("Match draw! You tried well");
+    } else {
+        console.log("Lost! Better luck next time");
+    }
 }
-else if (
-    (playersCall === "Rock" && computersCall === "Scissors") ||
-    (playersCall === "Paper" && computersCall === "Rock") ||
-    (playersCall === "Scissors" && computersCall === "Paper")
-) {
-    result = "You won!";
-}
-else {
-    result = "You lost!";
-}
-console.log(result);
+
+// Start the game
+playGame();
