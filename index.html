@@ -3,10 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type="text/javascript" src="script.js"></script>
-    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="script.js" defer></script>
+    <title>Rock Paper Scissors</title>
 </head>
 <body>
-    
+
+    <div class="content">
+        <header class="heading">
+            <h1 class="theHeading">Rock Paper Scissor</h1>
+        </header>
+        <div class="btn">
+            <button id="btnR">Rock</button>
+            <button id="btnP">Paper</button>
+            <button id="btnS">Scissors</button>
+        </div>
+        <div class="roundScoresResult">
+            <div class="left">
+                <div id="round" style="font-weight: bold;"></div>
+                <div id="scores"></div>
+            </div>
+            <div class="right">
+                <p id="result"></p>
+            </div>
+        </div>
+        <div id="finalScore"></div>
+    </div>
+
+    <footer>2024 yogramming</footer>
 </body>
 </html>

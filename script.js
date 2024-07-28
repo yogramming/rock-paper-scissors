@@ -1,7 +1,47 @@
-function getPlayersCall() {
-    let playersCall = prompt("Choose one out of Rock, Paper or Scissors: ");
-    return playersCall;
+const btnR = document.querySelector("#btnR");
+const btnP = document.querySelector("#btnP");
+const btnS = document.querySelector("#btnS");
+
+let yourScore = 0;
+let computerScore = 0;
+let round = 0;
+
+btnR.addEventListener("click", () => clickTheButton("Rock"));
+btnP.addEventListener("click", () => clickTheButton("Paper"));
+btnS.addEventListener("click", () => clickTheButton("Scissors"));
+
+function clickTheButton(playersCall) {
+    round++;
+    if (round > 5) {
+        return;
+    }
+
+    const computersCall = getComputersCall();
+    const result = playRound(playersCall,computersCall);
+
+    if (result === "You won!") yourScore++;
+    else if (result === "You lost!") computerScore++;
+
+    const roundPrint = document.querySelector("#round");
+    const scorePrint = document.querySelector("#scores");
+    const resultPrint = document.querySelector("#result");
+    const finalScorePrint = document.querySelector("#finalScore");
+
+    roundPrint.innerHTML = `Round: <strong>${round}</strong>`;
+    scorePrint.innerHTML = `You: ${yourScore} Computer: ${computerScore}`;
+    resultPrint.innerHTML = `You: ${playersCall}<br> Computer: ${computersCall}<br> ${result}`;
+
+    if (round === 5) {
+        if (yourScore > computerScore) {
+            finalScorePrint.textContent = `YOU  WIN!`;
+        } else if (yourScore < computerScore) {
+            finalScorePrint.textContent = `YOU  LOSE!`;
+        } else {
+            finalScorePrint.textContent = `MATCH DRAW!`;
+        }
+    }
 }
+
 function getComputersCall() {
     let arr = ["Rock", "Paper", "Scissors"];
     let index = Math.floor(Math.random() * arr.length);
@@ -9,57 +49,18 @@ function getComputersCall() {
 }
 
 function playRound(playersCall, computersCall) {
-    playersCall = playersCall.trim().toLowerCase();
-    computersCall = computersCall.trim().toLowerCase();
-    let result;
 
     if (playersCall === computersCall) {
-        result = "Match tie!";
+        return "Match tie!";
     }
     else if (
-        (playersCall === "rock" && computersCall === "scissors") ||
-        (playersCall === "paper" && computersCall === "rock") ||
-        (playersCall === "scissors" && computersCall === "paper")
+        (playersCall === "Rock" && computersCall === "Scissors") ||
+        (playersCall === "Paper" && computersCall === "Rock") ||
+        (playersCall === "Scissors" && computersCall === "Paper")
     ) {
-        result = "You won!";
+        return "You won!";
     }
     else {
-        result = "You lost!";
-    }
-    return result;
-}
-function playGame() {
-    let playerScore = 0;
-    let computerScore = 0;
-    for (let i = 0; i < 5; i++) {
-        const playersChoice = getPlayersCall();
-        const computersChoice = getComputersCall();
-
-        console.log("Player chose: " + playersChoice);
-        console.log("Computer chose: " + computersChoice);
-
-        let result = playRound(playersChoice, computersChoice);
-        console.log(result);
-
-        if (result === "You won!") {
-            playerScore++;
-        } else if (result === "You lost!") {
-            computerScore++;
-        }
-    }
-
-    console.log("\nFinal scores:");
-    console.log("Player: " + playerScore);
-    console.log("Computer: " + computerScore);
-
-    if (playerScore > computerScore) {
-        console.log("Winner! You played excellent");
-    } else if (playerScore === computerScore) {
-        console.log("Match draw! You tried well");
-    } else {
-        console.log("Lost! Better luck next time");
+        return "You lost!";
     }
 }
-
-// Start the game
-playGame();
